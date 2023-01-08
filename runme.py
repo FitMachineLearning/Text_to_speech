@@ -27,7 +27,7 @@ printme = ""
 for line in file_contents:
   n=n+1
   printme+= line;
-  if n%20 == 19:
+  if n%10 == 9:
     OUTPUT_PATH = "Spoken_Output_"+str(n)+".wav"
 
     # Init TTS with the target model name
@@ -36,9 +36,10 @@ for line in file_contents:
     tts.tts_to_file(text=printme, file_path=OUTPUT_PATH)
 
     print("Generating Section "+str(n) )
+    printme=""
     # printme = "-------------\n"
 
-OUTPUT_PATH = "Spoken_Output_"+"L"+".wav"
+OUTPUT_PATH = "Spoken_Output_"+str(n)+".wav"
 
 # Init TTS with the target model name
 tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC_ph", progress_bar=True, gpu=True)
