@@ -17,12 +17,31 @@ tts = TTS(model_name)
 # Open the file in read mode
 with open('file.txt', 'r') as file:
   # Read the contents of the file into a list of strings
-  file_contents = file.read()
+  file_contents = file.readlines()
 
+# num_lines = file_contents.count()
+OUTPUT_PATH = "Spoken_Output_1.wav"
 
-OUTPUT_PATH = "Spoken_Outpu_1.wav"
+n=0
+printme = ""
+for line in file_contents:
+  n=n+1
+  printme+= line;
+  if n%20 == 19:
+    OUTPUT_PATH = "Spoken_Output_"+str(n)+".wav"
+
+    # Init TTS with the target model name
+    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC_ph", progress_bar=True, gpu=True)
+    # Run TTS
+    tts.tts_to_file(text=printme, file_path=OUTPUT_PATH)
+
+    print("Generating Section "+str(n) )
+    # printme = "-------------\n"
+
+OUTPUT_PATH = "Spoken_Output_"+"L"+".wav"
 
 # Init TTS with the target model name
 tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC_ph", progress_bar=True, gpu=True)
 # Run TTS
-tts.tts_to_file(text=file_contents, file_path=OUTPUT_PATH)
+tts.tts_to_file(text=printme, file_path=OUTPUT_PATH)
+
